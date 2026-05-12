@@ -280,3 +280,45 @@
     </script>
 </body>
 </html>
+
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  // 1. Paste YOUR config here
+  const firebaseConfig = { /* ... your config ... */ };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // 2. Handle Form Submission
+  const quickAddForm = document.querySelector('form');
+  
+  quickAddForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const submitBtn = e.target.querySelector('button');
+    submitBtn.innerText = "Saving...";
+    submitBtn.disabled = true;
+
+    const newItem = {
+      category: e.target.querySelector('select').value,
+      title: e.target.querySelectorAll('input')[0].value,
+      company: e.target.querySelectorAll('input')[1].value,
+      startDate: e.target.querySelectorAll('input')[2].value,
+      endDate: e.target.querySelectorAll('input')[3].value || "Present",
+      createdAt: new Date()
+    };
+
+    try {
+      await addDoc(collection(db, "portfolio_data"), newItem);
+      alert("Success! Item added to your website.");
+      location.reload(); // Refresh to show in table
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert("Failed to save. Check console.");
+    }
+  });
+</script>
+
