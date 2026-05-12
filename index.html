@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Dasun Dularaka</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://media.licdn.com/dms/image/v2/D5603AQGGkjQsg76sKQ/profile-displayphoto-scale_200_200/B56ZtMQzgoHIAc-/0/1766511034815?e=1779321600&v=beta&t=T7_y7HwvEHHrxYfThfnpmAeHv8Wv4Gxs2NiUmuTa33Q">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+        }
+
+        .input-field {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="antialiased flex h-screen overflow-hidden selection:bg-sky-500 selection:text-white">
+
+    <!-- MOBILE OVERLAY -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-20 hidden lg:hidden transition-opacity" onclick="toggleSidebar()"></div>
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-30 w-64 bg-slate-950 border-r border-slate-800 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col h-full">
+        <!-- Logo Area -->
+        <div class="h-20 flex items-center px-6 border-b border-slate-800">
+            <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-emerald-400">Admin Panel</span>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-sky-500/10 text-sky-400 font-medium border border-sky-500/20">
+                <i class="fas fa-chart-pie w-5 text-center"></i> Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors">
+                <i class="fas fa-user w-5 text-center"></i> Personal Info
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors">
+                <i class="fas fa-briefcase w-5 text-center"></i> Experience
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors">
+                <i class="fas fa-graduation-cap w-5 text-center"></i> Education
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors">
+                <i class="fas fa-trophy w-5 text-center"></i> Achievements
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors">
+                <i class="fas fa-share-nodes w-5 text-center"></i> Social Links
+            </a>
+        </nav>
+
+        <!-- User Bottom -->
+        <div class="p-4 border-t border-slate-800">
+            <div class="flex items-center gap-3 px-4 py-2">
+                <img src="https://media.licdn.com/dms/image/v2/D5603AQGGkjQsg76sKQ/profile-displayphoto-scale_200_200/B56ZtMQzgoHIAc-/0/1766511034815?e=1779321600&v=beta&t=T7_y7HwvEHHrxYfThfnpmAeHv8Wv4Gxs2NiUmuTa33Q" alt="Profile" class="w-10 h-10 rounded-full border-2 border-slate-700">
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-white truncate">Dasun Dularaka</p>
+                    <a href="#" class="text-xs text-rose-400 hover:text-rose-300"><i class="fas fa-sign-out-alt mr-1"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden">
+        
+        <!-- HEADER -->
+        <header class="h-20 glass-panel border-x-0 border-t-0 rounded-none flex items-center justify-between px-6 z-10 sticky top-0">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="text-xl font-semibold text-white">Dashboard Overview</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="index.html" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-sm font-medium rounded-lg border border-slate-700 transition-colors flex items-center gap-2">
+                    <i class="fas fa-external-link-alt"></i> View Site
+                </a>
+            </div>
+        </header>
+
+        <!-- SCROLLABLE CONTENT -->
+        <main class="flex-1 overflow-y-auto p-6 lg:p-8">
+            
+            <!-- STATS WIDGETS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="glass-panel p-6 flex items-center gap-4 border-l-4 border-l-sky-500">
+                    <div class="w-12 h-12 rounded-full bg-sky-500/20 flex items-center justify-center text-sky-400 text-xl">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-400 text-sm">Experiences</p>
+                        <h3 class="text-2xl font-bold text-white">3</h3>
+                    </div>
+                </div>
+                <div class="glass-panel p-6 flex items-center gap-4 border-l-4 border-l-emerald-500">
+                    <div class="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-400 text-sm">Education</p>
+                        <h3 class="text-2xl font-bold text-white">2</h3>
+                    </div>
+                </div>
+                <div class="glass-panel p-6 flex items-center gap-4 border-l-4 border-l-yellow-500">
+                    <div class="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400 text-xl">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-400 text-sm">Achievements</p>
+                        <h3 class="text-2xl font-bold text-white">2</h3>
+                    </div>
+                </div>
+                <div class="glass-panel p-6 flex items-center gap-4 border-l-4 border-l-purple-500">
+                    <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-400 text-sm">Profile Views</p>
+                        <h3 class="text-2xl font-bold text-white">1,248</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                
+                <!-- RECENT EXPERIENCE TABLE -->
+                <div class="xl:col-span-2 glass-panel p-6 flex flex-col">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-lg font-bold text-white">Manage Experience</h2>
+                        <button class="text-sky-400 hover:text-sky-300 text-sm font-medium">View All</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-300">
+                            <thead class="text-xs text-slate-400 uppercase bg-slate-800/50 border-b border-slate-700">
+                                <tr>
+                                    <th class="px-4 py-3 rounded-tl-lg">Job Title</th>
+                                    <th class="px-4 py-3">Company</th>
+                                    <th class="px-4 py-3">Duration</th>
+                                    <th class="px-4 py-3 text-right rounded-tr-lg">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800">
+                                <tr class="hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-4 py-4 font-medium text-white">Trainee Staff Assistant</td>
+                                    <td class="px-4 py-4">Bank Of Ceylon</td>
+                                    <td class="px-4 py-4"><span class="bg-sky-500/10 text-sky-400 px-2 py-1 rounded text-xs border border-sky-500/20">Present</span></td>
+                                    <td class="px-4 py-4 text-right space-x-2">
+                                        <button class="text-slate-400 hover:text-sky-400"><i class="fas fa-edit"></i></button>
+                                        <button class="text-slate-400 hover:text-rose-400"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-4 py-4 font-medium text-white">Gold Loan Officer</td>
+                                    <td class="px-4 py-4">CDB Finance PLC</td>
+                                    <td class="px-4 py-4">Apr 2025 - Dec 2025</td>
+                                    <td class="px-4 py-4 text-right space-x-2">
+                                        <button class="text-slate-400 hover:text-sky-400"><i class="fas fa-edit"></i></button>
+                                        <button class="text-slate-400 hover:text-rose-400"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-4 py-4 font-medium text-white">Trainee Executive</td>
+                                    <td class="px-4 py-4">GEMA Engineering</td>
+                                    <td class="px-4 py-4">May 2024 - Mar 2025</td>
+                                    <td class="px-4 py-4 text-right space-x-2">
+                                        <button class="text-slate-400 hover:text-sky-400"><i class="fas fa-edit"></i></button>
+                                        <button class="text-slate-400 hover:text-rose-400"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- QUICK ADD FORM -->
+                <div class="glass-panel p-6 h-fit">
+                    <h2 class="text-lg font-bold text-white mb-6 border-b border-slate-800 pb-2">Quick Add Item</h2>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Category</label>
+                            <select class="w-full input-field rounded-lg px-4 py-2.5 text-sm appearance-none cursor-pointer">
+                                <option>Experience</option>
+                                <option>Education</option>
+                                <option>Achievement</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Title</label>
+                            <input type="text" placeholder="e.g. Software Engineer" class="w-full input-field rounded-lg px-4 py-2.5 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Institution / Company</label>
+                            <input type="text" placeholder="e.g. Google" class="w-full input-field rounded-lg px-4 py-2.5 text-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1">Start Date</label>
+                                <input type="date" class="w-full input-field rounded-lg px-4 py-2.5 text-sm text-slate-400">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1">End Date</label>
+                                <input type="date" class="w-full input-field rounded-lg px-4 py-2.5 text-sm text-slate-400">
+                            </div>
+                        </div>
+                        <div class="pt-2">
+                            <button type="button" class="w-full bg-gradient-to-r from-sky-500 to-emerald-500 hover:from-sky-400 hover:to-emerald-400 text-slate-900 font-bold py-2.5 rounded-lg transition-all shadow-lg shadow-emerald-500/20">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            
+            <!-- Footer inside main -->
+            <footer class="mt-10 py-4 text-center border-t border-slate-800/50">
+                <p class="text-slate-500 text-sm">© 2026 Dasun Dularaka. Admin Panel.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Sidebar Toggle for Mobile
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobile-overlay');
+
+        function toggleSidebar() {
+            const isClosed = sidebar.classList.contains('-translate-x-full');
+            
+            if (isClosed) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                // Small delay to allow display:block to apply before fading in
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+    </script>
+</body>
+</html>
